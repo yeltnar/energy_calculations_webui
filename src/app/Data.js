@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-const number_str_map = ['zero','one','two','three', 'four'];
+const number_str_map = ['zero','one','two','three', 'four', 'five'];
 
 function timeoutPromise(ms){
   return new Promise((resolve, reject)=>{
@@ -82,7 +82,7 @@ function DepthDive({data, cur, parent_arr}) {
   const className = [...parent_arr, bonus_class].join(' ');
   let content;
 
-  if(typeof data === 'object'){
+  if(typeof data === 'object' && data !== null){
 
     let children = [];
 
@@ -99,6 +99,7 @@ function DepthDive({data, cur, parent_arr}) {
     );
 
   }else{
+    data = data===null ? 'null' : data ;
     content = (<div className="deep">{cur}: {data}</div>)
   }
 
@@ -111,7 +112,7 @@ function DepthDive({data, cur, parent_arr}) {
 
 function removeColons(data){
 
-  if( typeof data === 'object' ){
+  if( typeof data === 'object' && data !== null ){
     Object.keys(data).forEach((c)=>{
       let test_arr = c.split(': ');
       if(test_arr.length>1){

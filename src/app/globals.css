@@ -51,6 +51,11 @@ body {
   padding: .25rem;
 }
 
+.collapsed{
+  height: 0px;
+  overflow: hidden;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

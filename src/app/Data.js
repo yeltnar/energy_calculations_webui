@@ -70,11 +70,15 @@ export default function Data() {
 
 function DepthDive({data, cur, parent_arr}) {
 
+  const [collapsed, setCollapsed] = useState(false);
+
   function clickCallBack(...a){
     console.log(...a);
+    setCollapsed(!collapsed);
   }
 
   const bonus_class = number_str_map[parent_arr.length]
+  const collapsed_class = collapsed ? 'collapsed' : undefined;
   const className = [...parent_arr, bonus_class].join(' ');
   let content;
 
@@ -83,14 +87,14 @@ function DepthDive({data, cur, parent_arr}) {
     let children = [];
 
     Object.keys(data).forEach((c)=>{
-      const new_data = (<DepthDive data={data[c]} cur={c} parent_arr={[...parent_arr, c]}></DepthDive>);
+      const new_data = (<DepthDive collapsed={collapsed} data={data[c]} cur={c} parent_arr={[...parent_arr, c]}></DepthDive>);
       children.push(new_data);
     });
 
     content = (
       <div>
         <div className="aaa" onClick={clickCallBack}>{cur}</div>
-        <div className="bbb">{children}</div>
+        <div className={collapsed_class}>{children}</div>
       </div>
     );
 

@@ -60,6 +60,26 @@ export default function Data() {
       <div>loading</div>
     );
   }else{
+
+    (() => {
+
+      function depthDive(data, key) {
+        if(typeof data === 'object'){
+          Object.keys(data).forEach((c)=>{
+            const new_data = depthDive(data[c], key+"."+c);
+            // console.log('findmedrew_new',key, new_data);
+          });
+        }else{
+          const s = ['findmedrew',key, data].join(', ');
+          console.log(s);
+          return s;
+        }
+      }
+    
+      depthDive(data, '');
+    
+    })();
+
     body = (
       <>
         <table>

@@ -2,13 +2,13 @@
 
 import { useMemo, useState } from "react";
 
+const number_str_map = ['zero','one','two','three', 'four'];
+
 function timeoutPromise(ms){
   return new Promise((resolve, reject)=>{
     setTimeout(resolve,ms);
   }); 
 }
-
-let c=0;
 
 const getData = (()=>{
 
@@ -61,26 +61,48 @@ export default function Data() {
     );
   }else{
 
-    (() => {
+    body = (() => {
 
-      function depthDive(data, key) {
+      function depthDive(data, cur, parent_arr) {
+
+        // const className = data[data.length-1];
+        const bonus_class = number_str_map[parent_arr.length]
+        const className = [...parent_arr, bonus_class].join(' ');
+        let content;
+
         if(typeof data === 'object'){
+
+          let children = [];
+
           Object.keys(data).forEach((c)=>{
-            const new_data = depthDive(data[c], key+"."+c);
-            // console.log('findmedrew_new',key, new_data);
+            // const new_data = depthDive(data[c], [...key_arr, c]);
+            const new_data = depthDive(data[c], c, [...parent_arr, c]);
+            children.push(new_data);
           });
+
+          content = (
+            <div>
+              <div className="aaa">{cur}</div>
+              <div className="bbb">{children}</div>
+            </div>
+          );
+
         }else{
-          const s = ['findmedrew',key, data].join(', ');
-          console.log(s);
-          return s;
+          content = (<div className="deep">{cur} - {data}</div>)
         }
+
+        return (
+          <div className={className}>
+            {content}
+          </div>
+        );
       }
     
-      depthDive(data, '');
+      return depthDive(data, 'data', ['data']);
     
     })();
 
-    body = (
+    let _body = (
       <>
         <table>
           <th>times</th>

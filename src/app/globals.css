@@ -26,12 +26,29 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-th{
-  font-size: 1.25rem;
+.data.one {
+  /* background-color: blue; */
 }
 
-tr:nth-child(even) {
-  background-color: rgb(30,30,30);
+.data.two {
+  background-color: rgb(94, 0, 16);
+}
+
+.data.three {
+  background-color: rgb(66, 66, 0);
+}
+
+.data.four {
+  background-color: rgb(13, 0, 95);
+}
+
+.deep{
+  padding: .125rem;
+}
+
+.data {
+  margin-left: 1rem;
+  padding: .25rem;
 }
 
 @layer utilities {

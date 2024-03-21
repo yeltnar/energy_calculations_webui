@@ -99,7 +99,7 @@ function DepthDive({data, cur, parent_arr}) {
     );
 
   }else{
-    content = (<div className="deep">{cur} - {data}</div>)
+    content = (<div className="deep">{cur}: {data}</div>)
   }
 
   return (

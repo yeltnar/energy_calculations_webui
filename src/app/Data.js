@@ -47,9 +47,6 @@ export default function Data() {
   useMemo(async()=>{
     if(data!==null){return;}
     let _data = await getData();
-    // _data = JSON.stringify(_data,null,2);
-    // _data = _data.split('\n').join('<br/>');
-    // console.log({_data});
     removeColons(_data);
     setData(_data.results);
   },[]);
@@ -62,158 +59,49 @@ export default function Data() {
   }else{
 
     body = (() => {
-
-      function depthDive(data, cur, parent_arr) {
-
-        // const className = data[data.length-1];
-        const bonus_class = number_str_map[parent_arr.length]
-        const className = [...parent_arr, bonus_class].join(' ');
-        let content;
-
-        if(typeof data === 'object'){
-
-          let children = [];
-
-          Object.keys(data).forEach((c)=>{
-            // const new_data = depthDive(data[c], [...key_arr, c]);
-            const new_data = depthDive(data[c], c, [...parent_arr, c]);
-            children.push(new_data);
-          });
-
-          content = (
-            <div>
-              <div className="aaa">{cur}</div>
-              <div className="bbb">{children}</div>
-            </div>
-          );
-
-        }else{
-          content = (<div className="deep">{cur} - {data}</div>)
-        }
-
-        return (
-          <div className={className}>
-            {content}
-          </div>
-        );
-      }
-    
-      return depthDive(data, 'data', ['data']);
-    
+      return (<DepthDive data={data} cur={'data'} parent_arr={['data']}></DepthDive>);
     })();
-
-    let _body = (
-      <>
-        <table>
-          <th>times</th>
-          <tr>
-            <td>period_start</td>
-            <td>{data.times.period_start}</td>
-          </tr>
-          <tr>
-            <td>period_end</td>
-            <td>{data.times.period_end}</td>
-          </tr>
-          <tr>
-            <td>earliest_record</td>
-            <td>{data.times.earliest_record}</td>
-          </tr>
-          <tr>
-            <td>latest_record</td>
-            <td>{data.times.latest_record}</td>
-          </tr>
-          <tr>
-            <td>days_in_range</td>
-            <td>{data.times.days_in_range}</td>
-          </tr>
-          <tr></tr>
-          <th>info</th>
-          <tr></tr>
-          <tr>
-            <td>avg_produced</td>
-            <td>{data.info.production_info.avg_produced}</td>
-          </tr>
-          <tr>
-            <td>gross_consumption</td>
-            <td>{data.info.production_info.gross_consumption}</td>
-          </tr>
-          <tr>
-            <td>gross_usage</td>
-            <td>{data.info.production_info.gross_usage}</td>
-          </tr>
-          <tr>
-            <td>total_raw_production</td>
-            <td>{data.info.production_info.total_raw_production}</td>
-          </tr>
-          <tr>
-            <td>usage_time</td>
-            <td>{data.info.production_info.usage_time}</td>
-          </tr>
-          <th>bill</th>
-          <tr>
-            <td>total_consumption</td>
-            <td>{data.info.bill.total_consumption}</td>
-          </tr>
-          <tr>
-            <td>total_surplus_generation</td>
-            <td>{data.info.bill.total_surplus_generation}</td>
-          </tr>
-          <tr>
-            <td>total_credit_earned</td>
-            <td>{data.info.bill.total_credit_earned}</td>
-          </tr>
-          <tr>
-            <td>gross_receipt_tax_reimbursement</td>
-            <td>{data.info.bill.gross_receipt_tax_reimbursement}</td>
-          </tr>
-          <tr>
-            <td>pcu_rate</td>
-            <td>{data.info.bill.pcu_rate}</td>
-          </tr>
-          <tr>
-            <td>total_energy_charge</td>
-            <td>{data.info.bill.total_energy_charge}</td>
-          </tr>
-          <tr>
-            <td>total_oncor_price</td>
-            <td>{data.info.bill.total_oncor_price}</td>
-          </tr>
-          <tr>
-            <td>total_ercot_price_rounded</td>
-            <td>{data.info.bill.total_ercot_price_rounded}</td>
-          </tr>
-          <tr>
-            <td>total_fee</td>
-            <td>{data.info.bill.total_fee}</td>
-          </tr>
-          <tr>
-            <td>total_charge</td>
-            <td>{data.info.bill.total_charge}</td>
-          </tr>
-          <tr>
-            <td>avg_earned</td>
-            <td>{data.info.bill.avg_earned}</td>
-          </tr>
-          <th>money</th>
-          <tr>
-            <td>total_credit_earned</td>
-            <td>{data.info.money.total_credit_earned}</td>
-          </tr>
-          <tr>
-            <td>oppo_earned</td>
-            <td>{data.info.money.oppo_earned}</td>
-          </tr>
-          <tr>
-            <td>total_earned_toward_solar</td>
-            <td>{data.info.money.total_earned_toward_solar}</td>
-          </tr>
-        </table>
-      </>
-    );
   }
 
   return (
     body
+  );
+}
+
+function DepthDive({data, cur, parent_arr}) {
+
+  function clickCallBack(...a){
+    console.log(...a);
+  }
+
+  const bonus_class = number_str_map[parent_arr.length]
+  const className = [...parent_arr, bonus_class].join(' ');
+  let content;
+
+  if(typeof data === 'object'){
+
+    let children = [];
+
+    Object.keys(data).forEach((c)=>{
+      const new_data = (<DepthDive data={data[c]} cur={c} parent_arr={[...parent_arr, c]}></DepthDive>);
+      children.push(new_data);
+    });
+
+    content = (
+      <div>
+        <div className="aaa" onClick={clickCallBack}>{cur}</div>
+        <div className="bbb">{children}</div>
+      </div>
+    );
+
+  }else{
+    content = (<div className="deep">{cur} - {data}</div>)
+  }
+
+  return (
+    <div className={className}>
+      {content}
+    </div>
   );
 }
 
@@ -227,7 +115,6 @@ function removeColons(data){
         data[new_c] = data[c];
         console.log(c);
         console.log(new_c);
-        // debugger
         delete data[c];
 				c = new_c;
       }

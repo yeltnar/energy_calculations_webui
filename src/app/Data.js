@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useMemo, useState } from "react";
 
@@ -16,23 +16,24 @@ const getData = (()=>{
   let pending = (async function(){
     console.log('[getData] findmedrew');
 
-    // let url = `http://localhost:3000`;
-    let url = `https://energy-calculations.mini.lan`;
-    let start = new URLSearchParams(window.location.search).get("start");
-    let end = new URLSearchParams(window.location.search).get("end");
-    let all = new URLSearchParams(window.location.search).get("all");
-    let index = new URLSearchParams(window.location.search).get("index");
+    let url = `/api`; // use proxy 
+    let search = window.location.search || "";
+    // let url = `https://energy-calculations.mini.lan`;
+    let start = new URLSearchParams(search).get("start");
+    let end = new URLSearchParams(search).get("end");
+    let all = new URLSearchParams(search).get("all");
+    let index = new URLSearchParams(search).get("index");
 
     if (all !== null) {
       url = `${url}/all`;
     } else {
       if (start !== null) {
         const s = url.includes('?') ? "&" : "?";
-        url = `${url}${s}start=${start}`;
+        url = `/${url}${s}start=${start}`;
       }
       if (end !== null) {
         const s = url.includes('?') ? "&" : "?";
-        url = `${url}${s}end=${end}`;
+        url = `/${url}${s}end=${end}`;
       }
     }
 
@@ -60,7 +61,7 @@ export default function Data() {
   useMemo(async()=>{
     if(data!==null){return;}
     let _data = await getData();
-    removeColons(_data);
+    // removeColons(_data);
     setData(_data.results);
   },[]);
 
@@ -85,8 +86,7 @@ function DepthDive({data, cur, parent_arr}) {
 
   const [collapsed, setCollapsed] = useState(false);
 
-  function clickCallBack(...a){
-    console.log(...a);
+  function clickCallBack(){
     setCollapsed(!collapsed);
   }
 
@@ -99,8 +99,8 @@ function DepthDive({data, cur, parent_arr}) {
 
     let children = [];
 
-    Object.keys(data).forEach((c)=>{
-      const new_data = (<DepthDive collapsed={collapsed} data={data[c]} cur={c} parent_arr={[...parent_arr, c]}></DepthDive>);
+    Object.keys(data).forEach((c,i)=>{
+      const new_data = (<DepthDive key={i} collapsed={collapsed} data={data[c]} cur={c} parent_arr={[...parent_arr, c]}></DepthDive>);
       children.push(new_data);
     });
 

@@ -23,6 +23,8 @@ const getData = (()=>{
     let all = new URLSearchParams(window.location.search).get("all");
     let index = new URLSearchParams(window.location.search).get("index");
 
+    debugger
+
     if (all !== null) {
       url = `${url}/all`;
     } else {
@@ -60,7 +62,7 @@ export default function Data() {
   useMemo(async()=>{
     if(data!==null){return;}
     let _data = await getData();
-    removeColons(_data);
+    // removeColons(_data);
     setData(_data.results);
   },[]);
 

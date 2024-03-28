@@ -23,8 +23,6 @@ const getData = (()=>{
     let all = new URLSearchParams(window.location.search).get("all");
     let index = new URLSearchParams(window.location.search).get("index");
 
-    debugger
-
     if (all !== null) {
       url = `${url}/all`;
     } else {
@@ -101,8 +99,8 @@ function DepthDive({data, cur, parent_arr}) {
 
     let children = [];
 
-    Object.keys(data).forEach((c)=>{
-      const new_data = (<DepthDive collapsed={collapsed} data={data[c]} cur={c} parent_arr={[...parent_arr, c]}></DepthDive>);
+    Object.keys(data).forEach((c, index)=>{
+      const new_data = (<DepthDive key={index} collapsed={collapsed} data={data[c]} cur={c} parent_arr={[...parent_arr, c]}></DepthDive>);
       children.push(new_data);
     });
 

@@ -52,51 +52,6 @@ export default function App() {
     return cur.usage_time;
   });
 
-  const raw_production_dataset = {
-    label: 'raw_production',
-    data: data.results.individual_data.map((cur)=>{
-        return cur.raw_production;
-    }),
-    borderColor: 'rgb(99, 255, 132)',
-    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  };
-
-  const surplus_generation_dataset = {
-    label: 'surplus_generation',
-    data: data.results.individual_data.map((cur)=>{
-        return cur.surplus_generation;
-    }),
-    borderColor: 'rgb(255, 99, 132)',
-    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  };
-
-  const consumption_dataset = {
-    label: 'consumption',
-    data: data.results.individual_data.map((cur)=>{
-        return cur.consumption;
-    }),
-    borderColor: 'rgb(255, 99, 255)',
-    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  };
-
-  const earned_dataset = {
-    label: 'earned',
-    data: data.results.individual_data.map((cur)=>{
-        return cur.earned;
-    }),
-    borderColor: 'rgb(0, 255, 132)',
-    backgroundColor: 'rgba(0, 255, 132, 0.5)',
-  };
-
-  const spend_dataset = {
-    label: 'spend',
-    data: data.results.individual_data.map((cur)=>{
-        return cur.spend;
-    }),
-    borderColor: 'rgb(255, 99, 132)',
-    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  };
-
   const datasets = [
     {
         name:'raw_production',
@@ -118,16 +73,16 @@ export default function App() {
         borderColor:'rgba(255,150,150)',
         backgroundColor:'rgba(255,150,150)',
     },
-    // {
-    //     name:'earned',
-    //     borderColor:'rgba(0,0,0)',
-    //     backgroundColor:'rgba(0,0,0)',
-    // },
-    // {
-    //     name:'spend',
-    //     borderColor:'rgba(0,0,0)',
-    //     backgroundColor:'rgba(0,0,0)',
-    // },
+    {
+        name:'earned',
+        borderColor:'rgba(175,200,175)',
+        backgroundColor:'rgba(175,200,175)',
+    },
+    {
+        name:'spend',
+        borderColor:'rgba(200,175,175)',
+        backgroundColor:'rgba(200,175,175)',
+    },
   ].map((cur_dataset)=>{
     return {
         label: cur_dataset.name,

@@ -48,6 +48,18 @@ export const {getData, getDataNow} = (()=>{
       };
     }
 
+    if( body.results.individual_data !== undefined ){
+        body.results.individual_data = body.results.individual_data.sort((a, b)=>{
+            if(a.ms<b.ms){
+                return -1;
+            }else if(a.ms>b.ms){
+                return 1;
+            }else{
+                return 0;
+            }
+        });
+    }
+
     return body;
   })();
 

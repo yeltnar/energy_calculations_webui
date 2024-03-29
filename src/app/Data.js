@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react";
+import getData from '../getData';
 
 const number_str_map = ['zero','one','two','three', 'four', 'five'];
 
@@ -9,51 +10,6 @@ function timeoutPromise(ms){
     setTimeout(resolve,ms);
   }); 
 }
-
-const getData = (()=>{
-
-  let body;
-  let pending = (async function(){
-    console.log('[getData] findmedrew');
-
-    // let url = `http://localhost:3000`;
-    let url = `https://energy-calculations.mini.lan`;
-    let start = new URLSearchParams(window.location.search).get("start");
-    let end = new URLSearchParams(window.location.search).get("end");
-    let all = new URLSearchParams(window.location.search).get("all");
-    let index = new URLSearchParams(window.location.search).get("index");
-
-    if (all !== null) {
-      url = `${url}/all`;
-    } else {
-      if (start !== null) {
-        const s = url.includes('?') ? "&" : "?";
-        url = `${url}${s}start=${start}`;
-      }
-      if (end !== null) {
-        const s = url.includes('?') ? "&" : "?";
-        url = `${url}${s}end=${end}`;
-      }
-    }
-
-    const resp = await fetch(url);
-    body = await resp.json();
-
-    if (all !== null && index !== null) {
-      body = {
-        results: body.results[index]
-      };
-    }
-
-    return body;
-  })();
-
-  return async function getData(){
-    console.log('getData findmedrew');
-    return await pending;
-  }
-
-})();
 
 export default function Data() {
   const [data, setData] = useState(null);

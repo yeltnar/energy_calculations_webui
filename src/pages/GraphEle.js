@@ -13,7 +13,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import getData, {getDataNow} from '@/getData';
-// import faker from 'faker';
 
 ChartJS.register(
   CategoryScale,
@@ -24,16 +23,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-export async function wrapper(){
-    const data = await getData();
-    return <AppTest/>;
-}
-
-export function AppTest(){
-    console.log({findmedrew:'AppTest'});
-    return <div>final</div>
-}
 
 export default function App() {
 
@@ -103,6 +92,7 @@ export default function App() {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top',
@@ -119,5 +109,5 @@ export default function App() {
     },
   };
   
-  return <Line options={options} data={new_data} />;
+  return <Line options={options} height={null} width={null} data={new_data} />;
 }

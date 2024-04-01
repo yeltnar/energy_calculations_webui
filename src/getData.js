@@ -17,11 +17,15 @@ export const {getData, getDataNow} = (()=>{
     let start = new URLSearchParams(window.location.search).get("start");
     let end = new URLSearchParams(window.location.search).get("end");
     let all = new URLSearchParams(window.location.search).get("all");
+    let most_recent = new URLSearchParams(window.location.search).get("most_recent");
+    let most_recent_count = new URLSearchParams(window.location.search).get("most_recent_count");
     let index = new URLSearchParams(window.location.search).get("index");
 
     if (all !== null) {
       url = `${url}/all`;
-    } else {
+    } else if(most_recent !== null){
+      url = `${url}/most_recent`;
+    }else {
       if (start !== null) {
         const s = url.includes('?') ? "&" : "?";
         url = `${url}${s}start=${start}`;
@@ -35,6 +39,10 @@ export const {getData, getDataNow} = (()=>{
     if (i !== null || window.location.pathname.includes('graph') ) {
         const s = url.includes('?') ? "&" : "?";
         url = `${url}${s}i=${i||'true'}`;
+    }
+    if( most_recent_count !== null ){
+        const s = url.includes('?') ? "&" : "?";
+        url = `${url}${s}most_recent_count=${most_recent_count}`;
     }
 
     console.log({findmedrew:url});

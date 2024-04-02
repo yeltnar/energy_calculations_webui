@@ -36,6 +36,11 @@ export const {getData, getDataNow} = (()=>{
       }
     }
 
+
+    if (index !== null ) {
+        const s = url.includes('?') ? "&" : "?";
+        url = `${url}${s}index=${index}`;
+    }
     if (i !== null || window.location.pathname.includes('graph') ) {
         const s = url.includes('?') ? "&" : "?";
         url = `${url}${s}i=${i||'true'}`;
@@ -50,11 +55,6 @@ export const {getData, getDataNow} = (()=>{
     const resp = await fetch(url);
     body = await resp.json();
 
-    if (all !== null && index !== null) {
-      body = {
-        results: body.results[index]
-      };
-    }
 
     if( body.results.individual_data !== undefined ){
         body.results.individual_data = body.results.individual_data.sort((a, b)=>{

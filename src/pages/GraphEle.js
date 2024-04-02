@@ -48,6 +48,12 @@ export default function App() {
         backgroundColor:'rgba(0,255,0)',
     },
     {
+        name:'raw_power_production',
+        borderColor:'rgba(200,200,0)',
+        backgroundColor:'rgba(200,200,0)',
+        hidden: true,
+    },
+    {
         name:'surplus_generation',
         borderColor:'rgba(150,150,0)',
         backgroundColor:'rgba(150,150,0)',
@@ -71,6 +77,13 @@ export default function App() {
         name:'spend',
         borderColor:'rgba(200,175,175)',
         backgroundColor:'rgba(200,175,175)',
+        hidden: true,
+    },
+    {
+        name:'gross_usage',
+        borderColor:'rgba(200,175,175)',
+        backgroundColor:'rgba(200,175,175)',
+        hidden: true,
     },
   ].map((cur_dataset)=>{
     return {
@@ -80,6 +93,7 @@ export default function App() {
         }),
         borderColor: cur_dataset.borderColor,
         backgroundColor: cur_dataset.borderColor,
+        hidden: cur_dataset.hidden ? cur_dataset.hidden : false,
       };
   });
 

@@ -72,6 +72,7 @@ export default function App() {
         name:'earned',
         borderColor:'rgba(175,200,175)',
         backgroundColor:'rgba(175,200,175)',
+        hidden: true,
     },
     {
         name:'spend',

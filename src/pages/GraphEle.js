@@ -1,5 +1,6 @@
 "use client"
 
+import Decimal from 'decimal.js';
 import React, {useState, useMemo} from 'react';
 import {
   Chart as ChartJS,
@@ -24,6 +25,72 @@ ChartJS.register(
   Legend
 );
 
+// function to average over time windows.. started with hourly 
+function getSimpleResults({individual_data, minutes=false, hours=false, avg=true}){
+  const obj = {};
+
+  individual_data.forEach((cur)=>{
+    const fixed_date = new Date(cur.ms);
+    if(minutes===true){
+      fixed_date.setMinutes(0)
+    }
+    if(hours===true){
+      fixed_date.setHours(0)
+    }
+    const new_ms = fixed_date.setSeconds(0)
+    
+    obj[new_ms] = obj[new_ms] === undefined ? [] : obj[new_ms];
+    obj[new_ms].push(cur);
+    
+    console.log({fixed_date});
+  });
+
+  for( let k in obj ){
+    let keys = Object.keys(obj[k][0]);
+    let length = obj[k].length;
+
+    keys.forEach(( key )=>{
+      obj[k].forEach((cur)=>{
+
+        if( typeof cur[key] !== 'number' ){
+          obj[k][key] =obj[k][key]===undefined ? cur[key] : obj[k][key];
+          return;
+        }
+
+        // default to 0
+        obj[k][key] = obj[k][key]===undefined ? new Decimal(0) : obj[k][key];
+
+        // sum all the values 
+        // obj[k][key] += cur[key];
+        obj[k][key] = obj[k][key].add(cur[key]);
+
+      });
+    });
+
+    // clean up ; conert Decimal to number ; average out 
+    for ( let l in obj[k] ){
+      // throw obj[k].length;
+      if( Decimal.isDecimal(obj[k][l]) ){
+        // throw obj[k].length;
+        const len = obj[k].length;
+        if(avg===true){
+          obj[k][l] = obj[k][l].dividedBy(len).toNumber();
+        }
+      }
+    }
+  }
+
+  const to_return = [];
+  for( let k in obj ){
+    to_return.push(obj[k]);
+  }
+  
+  console.log({"ffmd":obj});
+  // throw new Error('no thanks');
+
+  return to_return;
+}
+
 export default function App() {
 
   const data = getDataNow();
@@ -36,6 +103,29 @@ export default function App() {
   if(data===null || data===undefined){
     return null;
   }
+
+  let ignore_minutes = false;
+  let ignore_hours = false;
+  let grainularity = new URLSearchParams(window.location.search).get("grain");
+  
+  if(grainularity === 'day'){
+    ignore_minutes = true;
+    ignore_hours = true;
+  }
+  if(grainularity === 'hour'){
+    ignore_minutes = true;
+  }
+
+  // if we ask for it to be false, set to false, but true otherwise 
+  let avg = !(new URLSearchParams(window.location.search).get("avg") === 'false');
+
+  const get_obj = { 
+    individual_data: data.results.individual_data, 
+    minutes: ignore_minutes, 
+    hours: ignore_hours,
+    avg,
+  };
+  data.results.individual_data = getSimpleResults(get_obj);
 
   const new_labels = data.results.individual_data.map((cur)=>{
     return cur.usage_time;

@@ -68,16 +68,18 @@ function getSimpleResults({individual_data, minutes=false, hours=false, avg=true
     });
 
     // clean up ; conert Decimal to number ; average out 
-    for ( let l in obj[k] ){
+    for (let l in obj[k]) {
       // throw obj[k].length;
-      if( Decimal.isDecimal(obj[k][l]) ){
-        // throw obj[k].length;
-        const len = obj[k].length;
-        if(avg===true){
-          obj[k][l] = obj[k][l].dividedBy(len).toNumber();
+      if (Decimal.isDecimal(obj[k][l])) {
+        if (avg === true) {
+          // throw obj[k].length;
+          const len = obj[k].length;
+          obj[k][l] = obj[k][l].dividedBy(len)
         }
+        obj[k][l] = obj[k][l].toNumber();
       }
     }
+
   }
 
   const to_return = [];

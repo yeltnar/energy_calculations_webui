@@ -4,7 +4,7 @@
 ###### _frontend query params_
 | value    | default | description                               | example    |
 | -------- | ------- | ----------------------------------------- | ---------- |
-| avg      | true    | to average when condincing data           |            |
+| avg      | true    | to average when condensing data           |            |
 | grain    |         | grainularity to use for data points;      | day, hour |
 
 ###### _backend query params_

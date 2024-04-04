@@ -8,12 +8,16 @@
 | grain    |         | grainularity to use for data points;      | day, hour |
 
 ###### _backend query params_
-| value    | default | description                                                     | example     |
-| -------- | ------- | --------------------------------------------------------------- | ----------- |
-| all      |         | returns all results; index is required; no start/end allowed    |             |
-| index    |         | index in billing format to return                               | 5           |
-| start    |         | JS Date string for start; no all/index allowed                  | Jan 1, 2024 |
-| end      |         | JS Date string for end; no all/index allowed                    | Jan 1, 2024 |
+| value             | default | description                                                     | example     |
+| --------          | ------- | --------------------------------------------------------------- | ----------- |
+| all               |         | returns all results; index is required; no start/end allowed    |             |
+| index             |         | index in billing format to return                               | 5           |
+| --------          | ------- | --------------------------------------------------------------- | ----------- |
+| start             |         | JS Date string for start; no all/index allowed                  | Jan 1, 2024 |
+| end               |         | JS Date string for end; no all/index allowed                    | Jan 1, 2024 |
+| --------          | ------- | --------------------------------------------------------------- | ----------- |
+| most_recent       |         | returns X most recent days                                      |             |
+| most_recent_count |         | num recent days to return                                       | 2           |
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).

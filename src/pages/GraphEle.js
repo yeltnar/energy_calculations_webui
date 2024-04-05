@@ -173,6 +173,12 @@ export default function App() {
         hidden: true,
     },
     {
+        name:'saved',
+        borderColor:'rgba(175,175,200)',
+        backgroundColor:'rgba(175,175,200)',
+        hidden: true,
+    },
+    {
         name:'spend',
         borderColor:'rgba(200,175,175)',
         backgroundColor:'rgba(200,175,175)',

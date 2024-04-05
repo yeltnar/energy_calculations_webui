@@ -162,6 +162,12 @@ export default function App() {
     },
     {
         name:'earned',
+        borderColor:'rgba(200,200,175)',
+        backgroundColor:'rgba(200,200,175)',
+        hidden: true,
+    },
+    {
+        name:'solar_reimbursement',
         borderColor:'rgba(175,200,175)',
         backgroundColor:'rgba(175,200,175)',
         hidden: true,

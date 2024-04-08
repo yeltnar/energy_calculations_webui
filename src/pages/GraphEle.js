@@ -224,6 +224,11 @@ export default function App() {
     scales: {
         x: {
             display: false
+        }, 
+        y: {
+          grid: {
+            lineWidth: ({ tick }) => tick.value == 0 ? 3 : 1
+          }
         }
     },
   };

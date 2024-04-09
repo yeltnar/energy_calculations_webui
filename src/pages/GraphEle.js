@@ -190,6 +190,18 @@ export default function App() {
         backgroundColor:'rgba(200,175,175)',
         hidden: true,
     },
+    {
+        name:'price',
+        borderColor:'rgba(200,175,175)',
+        backgroundColor:'rgba(200,175,175)',
+        hidden: true,
+    },
+    {
+        name:'price_uncapped',
+        borderColor:'rgba(0,0,0)',
+        backgroundColor:'rgba(0,0,0)',
+        hidden: true,
+    },
   ].map((cur_dataset)=>{
     return {
         label: cur_dataset.name,

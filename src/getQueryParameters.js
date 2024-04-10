@@ -4,6 +4,10 @@ const getQueryParemeters = (() => {
 
     function getQueryParameters() {
 
+        if(typeof window === 'undefined'){
+          return undefined;
+        }
+
         if(the_thing!==undefined){
             return the_thing;
         }
@@ -24,7 +28,9 @@ const getQueryParemeters = (() => {
         return the_thing;
     }
 
-    window.addEventListener('load',()=>{ getQueryParameters });
+    if (typeof window !== 'undefined') {
+        window.addEventListener('load', () => { getQueryParameters });
+    }
 
     return getQueryParameters;
 

@@ -14,6 +14,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import getData, {getDataNow} from '@/getData';
+import getQueryParemeters from '../getQueryParameters';
 
 ChartJS.register(
   CategoryScale,
@@ -42,7 +43,6 @@ function getSimpleResults({individual_data, minutes=false, hours=false, avg=true
     obj[new_ms] = obj[new_ms] === undefined ? [] : obj[new_ms];
     obj[new_ms].push(cur);
     
-    console.log({fixed_date});
   });
 
   for( let k in obj ){
@@ -108,7 +108,7 @@ export default function App() {
 
   let ignore_minutes = false;
   let ignore_hours = false;
-  let grainularity = new URLSearchParams(window.location.search).get("grain");
+  const {grain:grainularity} = getQueryParemeters();
   
   if(grainularity === 'day'){
     ignore_minutes = true;
@@ -119,7 +119,8 @@ export default function App() {
   }
 
   // if we ask for it to be false, set to false, but true otherwise 
-  let avg = !(new URLSearchParams(window.location.search).get("avg") === 'false');
+  let {avg} = getQueryParemeters();
+  avg = avg === 'false';
 
   const get_obj = { 
     individual_data: data.results.individual_data, 

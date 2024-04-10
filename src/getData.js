@@ -1,3 +1,4 @@
+import getQueryParemeters from './getQueryParameters';
 export const {getData, getDataNow} = (()=>{
 
   let body;
@@ -12,45 +13,58 @@ export const {getData, getDataNow} = (()=>{
 
     // let url = `http://localhost:3000`;
     let url = `https://energy-calculations.mini.lan`;
-    let i = new URLSearchParams(window.location.search).get("i");
-    // let i = 'true';// new URLSearchParams(window.location.search).get("i");
-    let start = new URLSearchParams(window.location.search).get("start");
-    let end = new URLSearchParams(window.location.search).get("end");
-    let all = new URLSearchParams(window.location.search).get("all");
-    let most_recent = new URLSearchParams(window.location.search).get("most_recent");
-    let most_recent_count = new URLSearchParams(window.location.search).get("most_recent_count");
-    let index = new URLSearchParams(window.location.search).get("index");
 
-    if (all !== null) {
+    let {
+      i,
+      start,
+      end,
+      all,
+      most_recent,
+      most_recent_count,
+      index,
+      days_after,
+      days_before,
+    } = getQueryParemeters();
+
+    let passthrough_parameters = {
+      i,
+      start,
+      end,
+      most_recent_count,
+      index,
+      days_after,
+      days_before,
+    };
+
+    if (all !== undefined) { 
       url = `${url}/all`;
-    } else if(most_recent !== null){
+    } else if(most_recent !== undefined){
       url = `${url}/most_recent`;
     }else {
-      if (start !== null) {
-        const s = url.includes('?') ? "&" : "?";
-        url = `${url}${s}start=${start}`;
+
+      for( let k in passthrough_parameters){
+        let cur = passthrough_parameters[k];
+        if (cur !== undefined) {
+          const s = url.includes('?') ? "&" : "?";
+          url = `${url}${s}${k}=${cur}`;
+        }
       }
-      if (end !== null) {
-        const s = url.includes('?') ? "&" : "?";
-        url = `${url}${s}end=${end}`;
-      }
+
     }
 
 
-    if (index !== null ) {
+    if (index !== undefined ) {
         const s = url.includes('?') ? "&" : "?";
         url = `${url}${s}index=${index}`;
     }
-    if (i !== null || window.location.pathname.includes('graph') ) {
+    if (i !== undefined || window.location.pathname.includes('graph') ) {
         const s = url.includes('?') ? "&" : "?";
         url = `${url}${s}i=${i||'true'}`;
     }
-    if( most_recent_count !== null ){
+    if( most_recent_count !== undefined ){
         const s = url.includes('?') ? "&" : "?";
         url = `${url}${s}most_recent_count=${most_recent_count}`;
     }
-
-    console.log({findmedrew:url});
 
     const resp = await fetch(url);
     body = await resp.json();

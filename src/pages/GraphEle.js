@@ -201,7 +201,16 @@ export default function App() {
   ].map((cur_dataset)=>{
     const sto_key = getLocalStorageLegandKey(cur_dataset.name);
     const default_hidden = cur_dataset.hidden ? cur_dataset.hidden : false;
-    const hidden = window.localStorage.getItem(sto_key) || default_hidden;
+    
+    let storage_hidden = window.localStorage.getItem(sto_key)
+    if( storage_hidden === 'true' ){
+      storage_hidden = true;
+    }else if( storage_hidden === 'false' ){
+      storage_hidden = false;
+    }
+
+    const hidden = storage_hidden===null ? default_hidden : storage_hidden;
+
     return {
         label: cur_dataset.name,
         data: data.results.individual_data.map((cur)=>{
@@ -232,10 +241,10 @@ export default function App() {
 
           if( legendItem.hidden===true ){
             legend.chart.show(legendItem.datasetIndex);
-            window.localStorage.setItem( local_storage_key, true);
+            window.localStorage.setItem( local_storage_key, false);
           }else{
             legend.chart.hide(legendItem.datasetIndex);
-            window.localStorage.setItem( local_storage_key, false);
+            window.localStorage.setItem( local_storage_key, true);
           }
         }
       },

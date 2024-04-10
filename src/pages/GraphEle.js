@@ -97,11 +97,6 @@ export default function App() {
 
   const data = getDataNow();
 
-  console.log({
-        findmedrew:'fmd',
-      data,        
-  })
-
   if(data===null || data===undefined){
     return null;
   }
@@ -204,6 +199,9 @@ export default function App() {
         hidden: true,
     },
   ].map((cur_dataset)=>{
+    const sto_key = getLocalStorageLegandKey(cur_dataset.name);
+    const default_hidden = cur_dataset.hidden ? cur_dataset.hidden : false;
+    const hidden = window.localStorage.getItem(sto_key) || default_hidden;
     return {
         label: cur_dataset.name,
         data: data.results.individual_data.map((cur)=>{
@@ -211,7 +209,7 @@ export default function App() {
         }),
         borderColor: cur_dataset.borderColor,
         backgroundColor: cur_dataset.borderColor,
-        hidden: cur_dataset.hidden ? cur_dataset.hidden : false,
+        hidden,
       };
   });
 
@@ -228,6 +226,18 @@ export default function App() {
     plugins: {
       legend: {
         position: 'top',
+        onClick: (evt, legendItem, legend)=>{
+
+          let local_storage_key = getLocalStorageLegandKey(legendItem.text);
+
+          if( legendItem.hidden===true ){
+            legend.chart.show(legendItem.datasetIndex);
+            window.localStorage.setItem( local_storage_key, true);
+          }else{
+            legend.chart.hide(legendItem.datasetIndex);
+            window.localStorage.setItem( local_storage_key, false);
+          }
+        }
       },
       title: {
         display: true,
@@ -248,3 +258,8 @@ export default function App() {
   
   return <Line options={options} height={null} width={null} data={new_data} />;
 }
+
+function getLocalStorageLegandKey(text){
+  return `${text}_legand_show`;
+}
+

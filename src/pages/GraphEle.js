@@ -120,7 +120,7 @@ export default function App() {
 
   // if we ask for it to be false, set to false, but true otherwise 
   let {avg} = getQueryParemeters();
-  avg = avg === 'false';
+  avg = avg !== 'false';
 
   const get_obj = { 
     individual_data: data.results.individual_data, 

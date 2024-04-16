@@ -15,6 +15,8 @@
 | --------          | ------- | --------------------------------------------------------------- | ----------- |
 | start             |         | JS Date string for start; no all/index allowed                  | Jan 1, 2024 |
 | end               |         | JS Date string for end; no all/index allowed                    | Jan 1, 2024 |
+| days_after        |         | integer number of days following start/end                      | 0           |
+| days_before       |         | integer number of days preceding start/end                      | 0           |
 | --------          | ------- | --------------------------------------------------------------- | ----------- |
 | most_recent       |         | returns X most recent days                                      |             |
 | most_recent_count |         | num recent days to return                                       | 2           |

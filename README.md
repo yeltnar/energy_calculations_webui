@@ -11,7 +11,7 @@
 | value             | default | description                                                     | example     |
 | --------          | ------- | --------------------------------------------------------------- | ----------- |
 | all               |         | returns all results; index is required; no start/end allowed    |             |
-| index             |         | index in billing format to return                               | 5           |
+| index             |         | index in billing format to return                               | 5, latest   |
 | --------          | ------- | --------------------------------------------------------------- | ----------- |
 | start             |         | JS Date string for start; no all/index allowed                  | Jan 1, 2024 |
 | end               |         | JS Date string for end; no all/index allowed                    | Jan 1, 2024 |

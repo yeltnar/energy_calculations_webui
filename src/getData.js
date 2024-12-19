@@ -12,7 +12,7 @@ export const {getData, getDataNow} = (()=>{
     }
 
     // let url = `http://localhost:3000`;
-    let url = `https://energy-calculations.mini.lan`;
+    let url = `https://energy-calculations.h.lan`;
 
     let {
       i,
